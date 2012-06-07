@@ -43,8 +43,6 @@ $('a').hover(
 <meta property="og:type" content="blog"/>
 <meta property="og:url" content="http://spoqa.github.com/"/>
 <meta property="og:site_name" content="Spoqa Tech Blog"/>
-<meta property="og:description"
-      content="몇가지 Code snippet과 설명등을 포함하여 매주 1회씩 스포카 팀이 배운 여러가지 기술들에 대해 소개합니다."/>
 {% endif %}
 <meta property="og:image" content="http://www.gravatar.com/avatar/52813188698089bda7e20154c114d17e.png"/>
 </head>
@@ -62,9 +60,9 @@ $('a').hover(
       ">Tech Blog</a>
       <ol id="menu-list">
           {% if page.url == '/about.html' %}
-            <li><a class="selected" href="/about.html">About</a></li><span class="seperator">&nbsp;/</span>
+            <li><a class="selected" href="/2012/01/02/trello.html">About</a></li><span class="seperator">&nbsp;/</span>
           {% else %}
-            <li><a href="/about.html">About</a></li><span class="seperator">&nbsp;/</span>
+            <li><a href="/2012/01/02/trello.html">About</a></li><span class="seperator">&nbsp;/</span>
           {% endif %}
           {% if page.url != '/about.html' and page.url != '/job.html' %}
             <li><a class="selected" href="/index.html">Blog</a></li><span class="seperator">&nbsp;/</span>
@@ -73,11 +71,11 @@ $('a').hover(
           {% endif %}
 
           {% if page.url == '/job.html' %}
-            <li><a class="selected" href="/job.html">We're hiring!</a></li><span class="seperator">&nbsp;/</span>
+            <li><a class="selected" href="/2012/01/02/trello.html">Recuit</a></li><span class="seperator">&nbsp;/</span>
           {% else %}
-            <li><a href="/job.html">We're hiring!</a></li><span class="seperator">&nbsp;/</span>
+            <li><a href="/2012/01/02/trello.html">Recruit</a></li><span class="seperator">&nbsp;/</span>
           {% endif %}
-          <li><a href="https://github.com/spoqa">github</a></li>
+          <li><a href="https://github.com/ncrewcorp">github</a></li>
           <li><a href="/atom.xml"><img class="atom-img" src="/images/atom.png" /></a></li>
         </ol>
     </div>
