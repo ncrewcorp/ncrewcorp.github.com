@@ -1,0 +1,72 @@
+---
+layout: default
+---
+
+  <div class="posts">
+    <ul class="posts list-type-none">
+      {% for post in paginator.posts %}
+        {% if post.publish != false %}
+        <li></span><a href="{{ post.url }}"><span class="post-title">{{ post.title }}</span></a>
+        <p class="post-description">{{ post.description }}</p>
+        <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+        </li>
+        <div style="clear: both;"></div>
+        <hr style="margin-bottom: 20px; opacity: 0.5;" />
+        {% endif %}
+        <!--
+        {% if forloop.last == false %}
+          <hr style="margin-bottom: 20px; opacity: 0.5;" />
+        {% endif %}
+        -->
+      {% endfor %}
+    </ul>
+  </div>
+
+
+  <div id="post-pagination" class="pagination">
+
+  {% if paginator.previous_page %}
+  <p class="previous">
+  {% if paginator.previous_page == 1 %}
+  <a href="/">Prev</a>
+  {% else %}
+  <a href="/page{{paginator.previous_page}}">Prev</a>
+  {% endif %}
+  </p>
+  {% else %}
+  <p class="previous disabled">
+  <span>Prev</span>
+  </p>
+  {% endif %}
+
+  <ul class="pages">
+  <li class="page">
+  {% if paginator.page == 1 %}
+  <span class="current-page">1</span>
+  {% else %}
+  <a href="/">1</a>
+  {% endif %}
+  </li>
+
+  {% for count in (2..paginator.total_pages) %}
+  <li class="page">
+  {% if count == paginator.page %}
+  <span class="current-page">{{count}}</span>
+  {% else %}
+  <a href="/page{{count}}">{{count}}</a>
+  {% endif %}
+  </li>
+  {% endfor %}
+  </ul>
+
+  {% if paginator.next_page %}
+  <p class="next">
+  <a href="/page{{paginator.next_page}}">Next</a>
+  </p>
+  {% else %}
+  <p class="next disabled">
+  <span>Next</span>
+  </p>
+  {% endif %}
+
+  </div>
