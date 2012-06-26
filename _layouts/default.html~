@@ -7,8 +7,6 @@
 <title>Ncrew Tech Blog</title>
 <link rel="stylesheet" href="/css/styles.css?q=8" />
 <link rel="stylesheet" href="/css/syntax.css" />
-<!-- <link rel="stylesheet" href="/css/stylesheet.css" /> -->
-<!-- <link rel="stylesheet" href="/css/pygment_track.css" /> -->
 <script src="http://www.google.com/jsapi"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script>

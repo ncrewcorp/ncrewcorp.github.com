@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+
+<title>make</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-06-26 16:37:29 "/>
+<meta name="author" content="Slash, Sun"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">make</h1>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 make </a></li>
+<li><a href="#sec-2">2 왜 만들어졌나 </a></li>
+<li><a href="#sec-3">3 문제점 </a></li>
+<li><a href="#sec-4">4 대안점들 </a></li>
+<li><a href="#sec-5">5 cmake </a></li>
+<li><a href="#sec-6">6 make </a>
+<ul>
+<li><a href="#sec-6.1">6.1 make 를 배워야 하나 </a></li>
+<li><a href="#sec-6.2">6.2 autotools 에 대한 찬성론도 물론 있음 </a></li>
+<li><a href="#sec-6.3">6.3 Makefile 기본적인 모양 </a>
+<ul>
+<li><a href="#sec-6.3.1">6.3.1 foo.c 를 이용해서 foo 를 빌드하는 간단한 예제 </a></li>
+<li><a href="#sec-6.3.2">6.3.2 Automatic Variables 이란걸 이용하면 반복 타이핑을 줄일수 있다. </a></li>
+<li><a href="#sec-6.3.3">6.3.3 빌드외에도 다양하게 사용 가능 </a></li>
+<li><a href="#sec-6.3.4">6.3.4 변수도 사용 가능하다 </a></li>
+<li><a href="#sec-6.3.5">6.3.5 변수값을 환경변수에서 가져오도록 하는것도 가능. </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> make </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+소프트웨어 빌드를 자동화하기 위한 툴. Makefile 이란 파일에 빌드방법을
+서술하고 make 를 실행하는 식으로 돌아간다.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 왜 만들어졌나 </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+유닉스 시스템이 난립하던 시절에 여러 시스템에서의 빌드를 자동화 하고자 나온 툴.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 문제점 </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+빌드라는 작업은 매우 복잡한 작업이며 계속해서 더 복잡해 지고 있는
+중이다. 따라서 make 만으로는 처리하기 어려움 문제들이 나오고 이를 위해
+추가 유틸리티들이 개발되었다.
+</p>
+<ul>
+<li>
+autoconf
+</li>
+<li>
+automake
+</li>
+<li>
+libtool
+
+</li>
+</ul>
+
+<p>이는 결국 make 의 사용법을 더 어렵게 만들었고 이 autotools 들은 욕을
+먹기 시작했다. <a href="http://www.google.com/search?q=autotools+sucks">autotools sucks</a>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 대안점들 </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+수도없이 많다. <a href="http://www.google.com/search?q=make+alternatives">make alternatives</a> 몇가지만 적어보면
+</p>
+<dl>
+<dt>scons</dt><dd>
+python 기반. python 기반이라는게 장점이자 단점. 빌드속도가
+매우 느리다는 평이 많다. 구글은 주로 이걸 쓴다.
+</dd>
+<dt>bjam</dt><dd>
+jam 이란 빌드툴의 boost 변종버전. boost 를 직접 빌드해봤다면
+알것이다. 실제 이걸로 프로젝트 진행을 시도해본적이 있었으나
+몇가지 문제로 인해 사용을 접었다. 그냥 C++ 을 쓴 단순한
+라이브러리만 만들어야 하는 경우라면 이걸로 충분.
+</dd>
+<dt>waf</dt><dd>
+scons 의 변종. scons 의 문제점들을 수정하려고 나왔으며
+일부에서 쓰이는 중. 하지만 내가 이걸 살펴볼 당시에는 unstable
+상태라서 waf 소스를 프로젝트 내에 같이 넣어서 배포하기를
+권장하고 있었고 이는 결국 waf 사용에 있어 하위호환을 철저히
+지키지 않겠다는 소리나 마찬가지였으므로 사용을 포기했다.
+</dd>
+<dt>cmake</dt><dd>
+내가 현재 주로 쓰는 빌드툴. 직접 빌드를 해주는 시스템이
+아니고 다른 빌드툴을 위한 빌드환경을 뽑아주는 툴.
+
+</dd>
+</dl>
+
+<p>또한 IDE 들이 빌드툴기능을 포함한 경우도 많다. ( msvc 의 솔루션 등등 )
+</p>
+<p>
+이 외에도 각 언어별로 자신만의 빌드툴을 제공하는 경우도 많다. 예를들어
+python 의경우 distutils 를 제공하고 좀더 최신 언어인 go 같은 겨우 아예
+언어차원에서 make 를 쓰지 않고 같이 배포되는 내장 빌드툴을 사용하도록
+권장한다.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> cmake </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<ul>
+<li>
+meta build
+</li>
+<li>
+ms 개발자와 같이 프로젝트를 진행할 경우 솔루션 파일을 뽑아주기 때문에
+ms 개발자들의 거부감을 줄여주는 효과가 있다. 물론 이경우에라도 ms
+개발자들이 cmake 를 배워야 한다는 사실은 변하지 않지만 적어도 최초에
+비쥬얼 스튜디오로 소스를 볼수 있다는 점은 다른 팀원들을 납득시키는데
+크게 도움이 된다.
+</li>
+<li>
+cmake 자체는 정말 병신같다. cmake 스크립트 문법들은 정말 답이없고
+make 에서 편히 하던 일을 cmake 에서 하려면 코딩을 해야 한다. 물론
+cmake 에서 편한게 make 에선 어려운것도 있으니 트레이드오프.
+</li>
+<li>
+cmake 가 병신같지만 계속 쓰는 이유는 다른건 더 병신같기 때문.
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> make </h2>
+<div class="outline-text-2" id="text-6">
+
+
+
+</div>
+
+<div id="outline-container-6.1" class="outline-3">
+<h3 id="sec-6.1"><span class="section-number-3">6.1</span> make 를 배워야 하나 </h3>
+<div class="outline-text-3" id="text-6.1">
+
+
+<ul>
+<li>
+autotools 까지 필요한 복잡한 빌드를 해야 한다면 모를까 간단한
+작업에는 make 처럼 편한게 없다. 아직도 make 는 이바닥 표준
+빌드툴이다.
+</li>
+<li>
+따라서 간단한 make 사용법정도는 익혀서 알아두되 autotools 는 멀리해야
+한다. 만약 자신이 새로운 프로젝트를 시작해야 한다면 autotools 말고
+다른 대안을 찾아보자. 
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-6.2" class="outline-3">
+<h3 id="sec-6.2"><span class="section-number-3">6.2</span> autotools 에 대한 찬성론도 물론 있음 </h3>
+<div class="outline-text-3" id="text-6.2">
+
+
+<p>
+이 유파에 속하는 개발자들은 신규 개발자들이 사용법을 숙지하지 못하고
+autotools 를 썼기 때문에, 즉 생각없이 autotools 관련 코드들을 복사해서
+썼기 때문에 autotools 가 욕먹는 것이라고 생각하며 autotools 만으로
+대부분의 문제를 해결할수 있다고 생각한다.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6.3" class="outline-3">
+<h3 id="sec-6.3"><span class="section-number-3">6.3</span> Makefile 기본적인 모양 </h3>
+<div class="outline-text-3" id="text-6.3">
+
+
+
+
+
+<pre class="src src-makefile"><span style="color: #0000ff;">target</span>: dependencies...
+        commands
+        ...  
+</pre>
+
+
+
+
+
+</div>
+
+<div id="outline-container-6.3.1" class="outline-4">
+<h4 id="sec-6.3.1"><span class="section-number-4">6.3.1</span> foo.c 를 이용해서 foo 를 빌드하는 간단한 예제 </h4>
+<div class="outline-text-4" id="text-6.3.1">
+
+
+
+
+
+<pre class="src src-makefile"><span style="color: #0000ff;">foo</span>: foo.c
+        gcc -o foo foo.c
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6.3.2" class="outline-4">
+<h4 id="sec-6.3.2"><span class="section-number-4">6.3.2</span> Automatic Variables 이란걸 이용하면 반복 타이핑을 줄일수 있다. </h4>
+<div class="outline-text-4" id="text-6.3.2">
+
+
+
+
+
+<pre class="src src-makefile"><span style="color: #0000ff;">foo</span>: foo.c
+        $(<span style="color: #a0522d;">CC</span>) $<span style="color: #008b8b;">&lt;</span> -o <span style="color: #0000ff;">$</span><span style="color: #008b8b;">@</span>
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6.3.3" class="outline-4">
+<h4 id="sec-6.3.3"><span class="section-number-4">6.3.3</span> 빌드외에도 다양하게 사용 가능 </h4>
+<div class="outline-text-4" id="text-6.3.3">
+
+
+
+
+
+<pre class="src src-makefile"><span style="color: #0000ff;">foo</span>: foo.c
+        $(<span style="color: #a0522d;">CC</span>) -o <span style="color: #0000ff;">$</span><span style="color: #008b8b;">@</span> $<span style="color: #008b8b;">&lt;</span>
+<span style="color: #0000ff;">clean</span>:
+        rm foo  
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6.3.4" class="outline-4">
+<h4 id="sec-6.3.4"><span class="section-number-4">6.3.4</span> 변수도 사용 가능하다 </h4>
+<div class="outline-text-4" id="text-6.3.4">
+
+
+
+
+
+<pre class="src src-makefile"><span style="color: #a0522d;">FOO</span> = foo
+<span style="color: #0000ff;">all</span>:
+        @echo $(<span style="color: #a0522d;">FOO</span>)    
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6.3.5" class="outline-4">
+<h4 id="sec-6.3.5"><span class="section-number-4">6.3.5</span> 변수값을 환경변수에서 가져오도록 하는것도 가능. </h4>
+<div class="outline-text-4" id="text-6.3.5">
+
+
+
+
+
+<pre class="src src-makefile"><span style="color: #a0522d;">FOO</span> ?= foo
+<span style="color: #0000ff;">all</span>:
+        @echo $(<span style="color: #a0522d;">FOO</span>)  
+</pre>
+
+
+
+
+<p>
+위 Makefile 을 이렇게 실행해보자
+</p><pre class="example">
+FOO=bar make
+</pre>
+
+</div>
+</div>
+</div>
+</div>
+<div id="postamble">
+<p class="author"> Author: Slash, Sun
+<a href="mailto:iamslash@gmail.com">&lt;iamslash@gmail.com&gt;</a>
+</p>
+<p class="date"> Date: 2012-06-26 16:37:29 </p>
+<p class="creator">HTML generated by org-mode 6.31a in emacs 23</p>
+</div>
+</div>
+</body>
+</html>
